@@ -49,3 +49,21 @@ describe('Cadastro de dispositivos', () => {
         })
     })
 })
+
+it('Cadastrar um dispositivo sem mandar dados', () => {  
+
+        cy.request({
+            method: 'POST',
+            url: 'https://api.restful-api.dev/objects/',
+            failOnStatusCode: false,
+            body:''
+        }).as('postDeviceResult')
+
+        //validações
+        cy.get('@postDeviceResult')
+        .then((response) => {
+            expect(response.status).equal(400)
+            expect(response.body.error).equal("Request body is missing")   
+
+        })
+    })
