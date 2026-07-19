@@ -7,14 +7,7 @@ describe('Buscar dispositivos', () => {
 
     const device_id = '7'
 
-    cy.request({
-      method: 'GET',
-      url: `https://api.restful-api.dev/objects/${device_id}`,
-      failOnStatusCode: false
-    }).as('getDeviceResult')
-
-    //validações
-    cy.get('@getDeviceResult')
+    cy.buscarDeviceEspecifico(device_id)
       .then((response) => {
         expect(response.status).equal(200)
 
@@ -36,6 +29,19 @@ describe('Buscar dispositivos', () => {
 
         expect(response.body.data['Hard disk size']).not.empty
         expect(response.body.data['Hard disk size']).equal('1 TB')
+
+
+      })
+  })
+
+   it('Buscar um dispositivo inexistente', () => {
+
+    const device_id = 'xpto'
+
+    cy.buscarDeviceEspecifico(device_id)
+      .then((response) => {
+        expect(response.status).equal(404)
+        expect(response.body.error).equal (`Object with id=${device_id} was not found.`) //serve para verificar que não está vazio o campo
 
 
       })

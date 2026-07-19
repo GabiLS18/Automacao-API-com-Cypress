@@ -18,7 +18,7 @@ describe('Deletar dispositivos', () => {
 
         cy.request({
             method: 'POST',
-            url: 'https://api.restful-api.dev/objects/',
+            url: '/objects/',
             failOnStatusCode: false,
             body: body
         }).as('postDeviceResult')
@@ -31,7 +31,7 @@ describe('Deletar dispositivos', () => {
 
                 cy.request({
                     method: 'DELETE',
-                    url: `https://api.restful-api.dev/objects/${response_post.body.id}`,
+                    url: `/objects/${response_post.body.id}`,
                     failOnStatusCode: false,
                 }).as('deleteDeviceResult')
 
@@ -54,7 +54,7 @@ describe('Deletar dispositivos', () => {
 
                 cy.request({
                     method: 'DELETE',
-                    url: `https://api.restful-api.dev/objects/${id_inexistente}`,
+                    url: `/objects/${id_inexistente}`,
                     failOnStatusCode: false,
                 }).as('deleteDeviceResult')
 

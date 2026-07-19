@@ -1,31 +1,13 @@
 /// <reference types="cypress"/>
 
 describe('Cadastro de dispositivos', () => {
-
+    
+    const payload_cadastro_device = require('../fixtures/cadastrar_device_sucesso.json')
 
     it('Cadastrar um dispositivo', () => {
 
-        const body = {
-            "name": "Celular Teste",
-            "data": {
-                "year": 2025,
-                "price": 1849.99,
-                "CPU model": "Intel Core i9",
-                "Hard disk size": "500 GB",
-                "owner": "Qazando LTDA"
-            }
-        }
-
-        cy.request({
-            method: 'POST',
-            url: 'https://api.restful-api.dev/objects/',
-            failOnStatusCode: false,
-            body: body
-        }).as('postDeviceResult')
-
-        //validações
-        cy.get('@postDeviceResult')
-        .then((response) => {
+        cy.cadastrarDevice(payload_cadastro_device)
+           .then((response) => {
             expect(response.status).equal(200)
             expect(response.body.id).not.empty
             expect(response.body.createdAt).not.string
@@ -50,18 +32,10 @@ describe('Cadastro de dispositivos', () => {
     })
 })
 
-it('Cadastrar um dispositivo sem mandar dados', () => {  
+    it('Cadastrar um dispositivo sem mandar dados', () => {  
 
-        cy.request({
-            method: 'POST',
-            url: 'https://api.restful-api.dev/objects/',
-            failOnStatusCode: false,
-            body:''
-        }).as('postDeviceResult')
-
-        //validações
-        cy.get('@postDeviceResult')
-        .then((response) => {
+        cy.cadastrarDevice('')
+          .then((response) => {
             expect(response.status).equal(400)
             expect(response.body.error).equal("Request body is missing")   
 
